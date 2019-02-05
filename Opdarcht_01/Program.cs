@@ -20,8 +20,8 @@ namespace Opdracht_01
                 .Configure(config => { config.Selector = " ==> "; });
 
             // Creates a menu from the ConsoleMenu class so it's nice and pretty
-            var menu = new ConsoleMenu(args, 0).Add("Enter a name", () => Entername())
-                .Add("Show saved name", () => ReadNameFromFile())
+            var menu = new ConsoleMenu(args, 0).Add("Enter a name", Entername)
+                .Add("Show saved name", ReadNameFromFile)
                 .Add("Calculator", () => submenu.Show())
                 .Add("Exit", () => Environment.Exit(0))
                 .Configure(config => { config.Selector = " ==> "; });
@@ -31,7 +31,7 @@ namespace Opdracht_01
         }
 
         // Reads the json file and converts it to a User class
-        static void ReadNameFromFile()
+        private static void ReadNameFromFile()
         {
             var path = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 
@@ -46,14 +46,14 @@ namespace Opdracht_01
         }
 
         // Writes data to file
-        static void WriteToFile(string json)
+        private static void WriteToFile(string json)
         {
             var path = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
             File.WriteAllText(path + "json.txt", json);
         }
 
         //Shows the screen for entering the first and last name
-        static void Entername()
+        private static void Entername()
         {
             Console.Clear();
             Console.WriteLine("Enter a firstname");
@@ -70,7 +70,7 @@ namespace Opdracht_01
         }
 
         // Shows the screen for entering two numbers
-       static void Calculator(string method)
+       private static void Calculator(string method)
         {
             var calculator = new Calculator();
             Console.Clear();
