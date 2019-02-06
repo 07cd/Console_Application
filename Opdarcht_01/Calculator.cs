@@ -2,6 +2,9 @@
 
 namespace Opdracht_01
 {
+    /// <summary>
+    /// this class is used to calculate different calculations  
+    /// </summary>
     internal class Calculator
     {
         public void Plus(int var1, int var2)
