@@ -23,6 +23,7 @@ namespace Opdracht_01
             var menu = new ConsoleMenu(args, 0).Add("Enter a name", Entername)
                 .Add("Show saved name", ReadNameFromFile)
                 .Add("Calculator", () => submenu.Show())
+                .Add("Calender", Calender)
                 .Add("Exit", () => Environment.Exit(0))
                 .Configure(config => { config.Selector = " ==> "; });
 
@@ -46,7 +47,7 @@ namespace Opdracht_01
         }
 
         // Writes data to file
-        private static void WriteToFile(string json)
+        private static void WriteNameToFile(string json)
         {
             var path = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
             File.WriteAllText(path + "json.txt", json);
@@ -64,13 +65,13 @@ namespace Opdracht_01
             var user = new User {Fname = fname, Lname = lname};
 
             var json = JsonConvert.SerializeObject(user);
-            WriteToFile(json);
+            WriteNameToFile(json);
             Console.WriteLine(user.Fname + " " + user.Lname + ": is saved");
             Console.ReadKey();
         }
 
         // Shows the screen for entering two numbers
-       private static void Calculator(string method)
+        private static void Calculator(string method)
         {
             var calculator = new Calculator();
             Console.Clear();
@@ -98,6 +99,77 @@ namespace Opdracht_01
                 default:
                     Console.WriteLine("There was an error");
                     break;
+            }
+        }
+
+        private static void Calender()
+        {
+            Console.Clear();
+            DateTime today = DateTime.Now;
+            var done = false;
+            var month = today.Month;
+            var year = today.Year;
+            while (!done)
+            {
+                DateTime newTime = new DateTime(year, month, today.Day);
+                Console.WriteLine(newTime.ToString("Y"));
+
+                var test = DateTime.DaysInMonth(year, month);
+
+                var b = 0;
+
+                for (int i = 1; i <= test; i++)
+                {
+                    b++;
+
+                    if (month == today.Month)
+                    {
+                        Console.ForegroundColor = (today.Day == i) ? ConsoleColor.Black : ConsoleColor.White;
+                        Console.BackgroundColor = (today.Day == i) ? ConsoleColor.White : ConsoleColor.Black;
+                    }
+
+                    var iString = i.ToString();
+                    if (iString.Length == 1)
+                    {
+                        iString = iString.PadLeft(2, '0');
+                    }
+
+                    Console.Write($" {iString} ");
+
+                    if (b == 7)
+                    {
+                        Console.Write("\n");
+                        b = 0;
+                    }
+                }
+                Console.WriteLine(System.Environment.NewLine);
+                Console.WriteLine("Change the month with the left and right arrow keys");
+
+
+                var arrow = Console.ReadKey().Key;
+                Console.Clear();
+                if (arrow == ConsoleKey.LeftArrow)
+                {
+                    month--;
+                    if (month == 0)
+                    {
+                        month = 12;
+                        year--;
+                    }
+                }
+                else if (arrow == ConsoleKey.RightArrow)
+                {
+                    month++;
+                    if (month == 13)
+                    {
+                        month = 1;
+                        year++;
+                    }
+                }
+                else
+                {
+                    done = true;
+                }
             }
         }
     }
