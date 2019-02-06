@@ -11,7 +11,9 @@ namespace Opdracht_01
     {
         private static void Main(string[] args)
         {
-            var submenu = new ConsoleMenu(args, 1).Add("Return", ConsoleMenu.Close)
+            // shows all the options for the calculator
+            var calcMenu = new ConsoleMenu(args, 1)
+                .Add("Return", ConsoleMenu.Close)
                 .Add("+", () => Calculator("+"))
                 .Add("-", () => Calculator("-"))
                 .Add("*", () => Calculator("*"))
@@ -19,10 +21,17 @@ namespace Opdracht_01
                 .Add("Exit", () => Environment.Exit(0))
                 .Configure(config => { config.Selector = " ==> "; });
 
-            // Creates a menu from the ConsoleMenu class so it's nice and pretty
-            var menu = new ConsoleMenu(args, 0).Add("Enter a name", Entername)
+            // creates the submenu for showing or changing the saved name
+            var nameMenu = new ConsoleMenu(args, 1).Add("Return", ConsoleMenu.Close)
+                .Add("Create a name", Entername)
                 .Add("Show saved name", ReadNameFromFile)
-                .Add("Calculator", () => submenu.Show())
+                .Add("Exit", () => Environment.Exit(0))
+                .Configure(config => { config.Selector = " ==> "; });
+
+            // Creates a menu from the ConsoleMenu class so it's nice and pretty
+            var menu = new ConsoleMenu(args, 0)
+                .Add("Name options", nameMenu.Show)
+                .Add("Calculator", () => calcMenu.Show())
                 .Add("Calender", Calender)
                 .Add("Exit", () => Environment.Exit(0))
                 .Configure(config => { config.Selector = " ==> "; });
