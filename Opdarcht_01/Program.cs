@@ -71,7 +71,7 @@ namespace Opdracht_01
         /// <summary>
         /// Funtion to change the preferred console color 
         /// </summary>
-        /// <param name="color"></param>
+        /// <param name="color">color text</param>
         private static void ColorChange(string color)
         {
             string happy = "";
@@ -109,7 +109,7 @@ namespace Opdracht_01
         private static void WriteColorToFile(string color)
         {
             // color text path
-            var path = File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "..\\..\\..\\color.txt"));
+            var path = Path.Combine(Environment.CurrentDirectory, "..\\..\\..\\color.txt");
             File.WriteAllText(path, color);
         }
 
