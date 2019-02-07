@@ -12,8 +12,7 @@ namespace Opdracht_01
         
         private static void Main(string[] args)
         {
-            string filePath = @"C:\Users\Tuan\source\repos\Console_Application\color.txt";
-            string clr = File.ReadAllText(filePath);
+            string clr = File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "..\\..\\..\\color.txt"));
             Type type = typeof(ConsoleColor);
 
             // shows all the options for the calculator
@@ -110,7 +109,7 @@ namespace Opdracht_01
         private static void WriteColorToFile(string color)
         {
             // color text path
-            var path = @"C:\Users\Tuan\source\repos\Console_Application\color.txt";
+            var path = File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "..\\..\\..\\color.txt"));
             File.WriteAllText(path, color);
         }
 
